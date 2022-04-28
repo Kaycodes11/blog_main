@@ -3,8 +3,8 @@ import { Response } from 'express';
 
 @Controller('auth')
 export class AuthController {
-  @Get()
+  @Get('test')
   async validUser(@Res() response: Response) {
-    response.status(200).json({ message: `authentication tryout` });
+    response.status(200).json({ message: `authentication test` });
   }
 }
