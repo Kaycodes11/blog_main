@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('users')
 export class User {
@@ -26,8 +26,14 @@ export class User {
   // @Column('simple-json')
   // info: { firstName: string, lastName: string, fullName: string, mobile: string };
 
-  // @Column(default: () => 'male')
-  // gender: string;
+  @Column({ default: 'male' })
+  gender: string;
+
+  @CreateDateColumn({ name: 'created_at', default: () => 'current_timestamp' })
+  created_at: Date;
+
+  @UpdateDateColumn({ name: 'updated_at', default: () => 'current_timestamp' })
+  updated_at: Date;
 }
 
 // export class Result extends User {
