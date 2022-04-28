@@ -7,7 +7,5 @@ import { User } from '../users/entities/user.entity';
 export class UserHttpService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
-  ) {
-    console.log(`USER`, userRepository);
-  }
+  ) {}
 }

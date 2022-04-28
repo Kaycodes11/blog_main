@@ -5,8 +5,8 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { User } from "./users/entities/user.entity";
 import { UserHttpModule } from './user-http/user-http.module';
+import { CatsModule } from './cats/cats.module';
 
 @Module({
   imports: [
@@ -28,6 +28,7 @@ import { UserHttpModule } from './user-http/user-http.module';
       }),
     }),
     UserHttpModule,
+    CatsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

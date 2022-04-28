@@ -8,6 +8,6 @@ export class UserHttpController {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
   ) {
-    console.log(`USER_CONTROLLER`, userRepository);
+    // console.log(`USER_CONTROLLER`, userRepository);
   }
 }

@@ -1,4 +1,12 @@
-import { isDefined, IsDefined, IsNumber, IsString } from 'class-validator';
+import {
+  isDefined,
+  IsDefined,
+  IsEmail,
+  IsNumber,
+  IsString,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 
 export class RegisterUserDto {
   @IsString()
@@ -8,6 +16,17 @@ export class RegisterUserDto {
   @IsString()
   @IsDefined()
   lastName: string;
+
+  @IsEmail()
+  @IsString()
+  @IsDefined()
+  email: string;
+
+  @MaxLength(100)
+  @MinLength(6)
+  @IsString()
+  @IsDefined()
+  password: string;
 
   @IsNumber()
   @IsDefined()
