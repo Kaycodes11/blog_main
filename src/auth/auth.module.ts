@@ -6,10 +6,12 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { LocalStrategy } from './strategies/local.strategy';
 import { AuthController } from './auth.controller';
+import { MailModule } from "../mail/mail.module";
 
 @Module({
   imports: [
     UsersModule,
+    MailModule,
     PassportModule.register({
       defaultStrategy: 'jwt',
       property: 'user',
@@ -17,7 +19,7 @@ import { AuthController } from './auth.controller';
     }),
     {
       ...JwtModule.register({
-        secret: process.env.JWT_SECRET,
+        secret: process.env.JWT_SECRE,
         signOptions: { expiresIn: process.env.EXPIRESIN },
       }),
       global: true,

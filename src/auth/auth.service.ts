@@ -13,6 +13,7 @@ import { compare, genSalt, hash } from 'bcrypt';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterUserDto } from './dto/register-user.dto';
+import { MailService } from '../mail/mail.service';
 
 type LoginToken = {
   accessToken: string;
@@ -28,6 +29,7 @@ export class AuthService {
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     private readonly userService: UsersService,
     private readonly jwtService: JwtService,
+    private readonly mailService: MailService,
   ) {
     // console.log('USER_AUTH', userService);
   }
@@ -55,6 +57,9 @@ export class AuthService {
       ...rest,
     });
     await this.userRepository.save(user);
+    //  now send the confirmation email
+    const randomToken = Math.floor(1000 + Math.random() * 9000).toString();
+    await this.mailService.sendUserConfirmationMail(user, randomToken);
   }
 
   async genTokenWhenLogin({ id, email }: User): Promise<LoginToken> {
