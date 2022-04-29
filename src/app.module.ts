@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserHttpModule } from './user-http/user-http.module';
 import { CatsModule } from './cats/cats.module';
+import { ProfileModule } from './profile/profile.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { CatsModule } from './cats/cats.module';
     }),
     UserHttpModule,
     CatsModule,
+    ProfileModule,
   ],
   controllers: [AppController],
   providers: [AppService],

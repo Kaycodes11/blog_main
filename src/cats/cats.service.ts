@@ -18,4 +18,7 @@ export class CatsService {
     const cat = this.catRepository.create(createCatDto);
     return await this.catRepository.save(cat);
   }
+  async uploadAvatar(file: any): Promise<void> {
+    console.log('uploading avatar for cat');
+  }
 }
