@@ -8,7 +8,6 @@ import {
   SwaggerDocumentOptions,
   SwaggerModule,
 } from '@nestjs/swagger';
-import { options } from 'tsconfig-paths/lib/options';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
