@@ -2,6 +2,9 @@ import {
   Body,
   Controller,
   Get,
+  HttpCode,
+  HttpStatus,
+  Patch,
   Post,
   Req,
   Res,
@@ -21,6 +24,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
 
 @ApiTags('auth')
 // @ApiHeader({
@@ -86,6 +90,22 @@ export class AuthController {
         message: 'login successful',
         data: { accessToken, isTermsAndConditionsAccepted },
       });
+    } catch (e) {
+      response
+        .status(e?.status || 500)
+        .json({ message: e?.message || 'Unable to process your request' });
+    }
+  }
+
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Patch('forgot-password')
+  async forgotPassword(
+    @Body() forgotPassDto: ForgotPasswordDto,
+    @Res() response: Response,
+  ): Promise<void> {
+    try {
+      await this.authService.forgotPassword(forgotPassDto);
+      response.json({ message: 'Password has reset successfully' });
     } catch (e) {
       response
         .status(e?.status || 500)

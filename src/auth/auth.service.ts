@@ -14,6 +14,7 @@ import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { MailService } from '../mail/mail.service';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
 
 type LoginToken = {
   accessToken: string;
@@ -97,6 +98,16 @@ export class AuthService {
     return user;
   }
 
-  // async reset (): Promise(void) {}
-  // async forgotPassword(): Promise<void> {}
+  async forgotPassword({ email }: ForgotPasswordDto): Promise<void> {
+    console.log(`forgotten password`);
+    const user = await this.userRepository.findOne({
+      where: { email },
+    });
+    if (!user) {
+      throw new BadRequestException('No Such user exist');
+    }
+    //  now then send a mail with the instruction to follow to reset password/set a new password
+    const randomToken = Math.floor(1000 + Math.random() * 9000).toString();
+    await this.mailService.resetPasword(user, randomToken);
+  }
 }
