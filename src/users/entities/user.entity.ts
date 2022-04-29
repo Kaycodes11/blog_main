@@ -5,6 +5,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 @Entity('users')
 export class User {
@@ -23,7 +24,7 @@ export class User {
   @Column('text')
   password: string;
 
-  @Column('int', { nullable: true })
+  @Column('int', { nullable: false })
   age: number;
 
   // @Column('simple-array')
@@ -42,6 +43,7 @@ export class User {
   updated_at: Date;
 }
 
+// this will all the props and their metadata decorators
 // export class Result extends User {
 //   @Column()
 //   eligible:string;

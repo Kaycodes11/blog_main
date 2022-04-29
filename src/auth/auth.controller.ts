@@ -1,14 +1,30 @@
-import { Body, Controller, Post, Req, Res, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/login-user.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { Request, Response } from 'express';
 import { User } from '../users/entities/user.entity';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
+
+  @ApiBody({ type: [RegisterUserDto] })
+  @Get('bulkRegistrations')
+  async bulkRegister(@Body() registerDto: RegisterUserDto[]): Promise<void> {
+    console.log('The bulk user registration');
+  }
 
   @Post('register')
   async registerWithEmailAndPassword(
