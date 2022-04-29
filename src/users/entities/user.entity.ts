@@ -35,6 +35,11 @@ export class User {
   // @Column('simple-json')
   // info: { firstName: string, lastName: string, fullName: string, mobile: string };
 
+  /*
+  * Here A/User has multiple instance of B/Photos thus oneToMany relation
+  * Basically, User can have multiple Photo[] but each Photo is owned by  only one Single User
+  * */
+
   @OneToMany((type) => Photo, (photo) => photo.user)
   photos: Photo[];
 
