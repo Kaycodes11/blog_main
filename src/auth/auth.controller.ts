@@ -13,12 +13,38 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { Request, Response } from 'express';
 import { User } from '../users/entities/user.entity';
-import { ApiBody, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiCreatedResponse,
+  ApiForbiddenResponse,
+  ApiHeader,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
 @ApiTags('auth')
+// @ApiHeader({
+//   name: 'X-Header',
+//   description: 'Any request coming here, all those request's header now customized here',
+// })
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
+
+  @Get('mock-login')
+  @ApiResponse({
+    status: 201,
+    description: 'The User has been successfully created.',
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'The User has not created',
+  })
+  async mockRegisterWithCustomResponseForSwagger() {
+    console.log(
+      `this is how to set custom response for swagger for success/error`,
+    );
+  }
 
   @ApiBody({ type: [RegisterUserDto] })
   @Get('bulkRegistrations')
