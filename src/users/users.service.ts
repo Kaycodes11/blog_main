@@ -13,18 +13,7 @@ export class UsersService {
   // async findUsers(): Promise<User[]> {};
   // async findUserByIdOrEmail(idOrEmail: string): Promise<User> {};
 
-  async createUser(createUser: RegisterUserDto): Promise<void> {
-    const isUser = await this.userRepository.findOne({
-      where: { email: createUser.email },
-    });
-    if (!isUser) {
-      throw new BadRequestException(
-        'Stupid request or such user already exist',
-      );
-    }
-    const user: User = await this.userRepository.create(createUser);
-    await this.userRepository.save(user);
-  }
+
 
   // async updateUser() {}
   // async deleteUsers() {}

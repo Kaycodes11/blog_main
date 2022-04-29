@@ -11,7 +11,13 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     super({ usernameField: 'email', passReqToCallback: true });
   }
 
-  async validate(request: Request, loginUserDto: LoginUserDto): Promise<any> {
-    return await this.authorizationService.validateAuth(loginUserDto);
+  async validate(
+    request: Request,
+    email: string,
+    password: string,
+  ): Promise<any> {
+    // by default, it extracts email and password from request, if any other property needed;
+    // then use request?.body?.platform then pass it argument to below method if needed
+    return await this.authorizationService.validateAuth(email, password);
   }
 }

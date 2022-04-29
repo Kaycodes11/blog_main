@@ -3,12 +3,17 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
+  IsUUID,
   MinLength,
 } from 'class-validator';
 
 type Platform = 'web' | 'mobile';
 
 export class LoginUserDto {
+  @IsUUID()
+  @IsNotEmpty()
+  id?: string;
+
   @IsEmail()
   @IsNotEmpty()
   email: string;
