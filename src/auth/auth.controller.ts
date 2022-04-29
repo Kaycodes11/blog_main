@@ -59,7 +59,10 @@ export class AuthController {
   ): Promise<void> {
     try {
       await this.authService.registerWithEmailAndPassword(registerDto);
-      response.json({ message: 'Registration successful' });
+      response.json({
+        message:
+          'Registration successful, kindly check your email for confirmation link',
+      });
     } catch (e) {
       response
         .status(e?.status || 500)
