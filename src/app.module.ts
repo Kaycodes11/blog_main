@@ -9,6 +9,7 @@ import { UserHttpModule } from './user-http/user-http.module';
 import { CatsModule } from './cats/cats.module';
 import { ProfileModule } from './profile/profile.module';
 import { SharedModule } from './shared/shared.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { SharedModule } from './shared/shared.module';
     CatsModule,
     ProfileModule,
     SharedModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],
