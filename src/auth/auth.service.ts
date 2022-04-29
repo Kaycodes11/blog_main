@@ -56,10 +56,12 @@ export class AuthService {
       password: passwordHash,
       ...rest,
     });
-    await this.userRepository.save(user);
+    const saved = await this.userRepository.save(user);
+    // console.log(`saved `, saved);
     //  now send the confirmation email
     const randomToken = Math.floor(1000 + Math.random() * 9000).toString();
-    await this.mailService.sendUserConfirmationMail(user, randomToken);
+    // this email for just confirming newly registered users
+    await this.mailService.sendUserConfirmationMail(saved, randomToken);
   }
 
   async genTokenWhenLogin({ id, email }: User): Promise<LoginToken> {

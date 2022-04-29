@@ -1,19 +1,25 @@
+import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
-import { ISendMailOptions, MailerService } from '@nestjs-modules/mailer';
 import { User } from '../users/entities/user.entity';
+import * as path from 'path';
 
 @Injectable()
 export class MailService {
   constructor(private mailerService: MailerService) {}
-  async sendUserConfirmationMail(user: User, token: string | number) {
+
+  async sendUserConfirmationMail(user: User, token: string) {
     const url = `example.com/auth/confirm?token=${token}`;
+
     await this.mailerService.sendMail({
-      to: 'test@gmail.com',
-      subject:
-        'Welcome to Main Blog! Thanks for your support, verify your mail now',
-      template: '/confirmation',
+      to: user.email,
+      // from: '"Support Team" <support@example.com>', // override default from mail.module.ts
+      subject: 'Welcome to Nice App! Confirm your Email',
+      // html: 'just send the confirmation mail ',
+      template: 'confirmation',
+      // template: path.join(__dirname, './templates', 'confirmation'), // `.hbs` extension is appended automatically
       context: {
-        name: `${user.firstName} ${user.surName}`,
+        // ✏️ filling curly brackets with content
+        name: user.firstName,
         url,
       },
     });
