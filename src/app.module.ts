@@ -10,6 +10,7 @@ import { CatsModule } from './cats/cats.module';
 import { ProfileModule } from './profile/profile.module';
 import { SharedModule } from './shared/shared.module';
 import { MailModule } from './mail/mail.module';
+import { PhotoModule } from './photo/photo.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { MailModule } from './mail/mail.module';
     ProfileModule,
     SharedModule,
     MailModule,
+    PhotoModule,
   ],
   controllers: [AppController],
   providers: [AppService],

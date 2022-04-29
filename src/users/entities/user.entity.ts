@@ -2,10 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Photo } from 'src/photo/entities/photo.entity';
 
 @Entity('users')
 export class User {
@@ -32,6 +34,9 @@ export class User {
 
   // @Column('simple-json')
   // info: { firstName: string, lastName: string, fullName: string, mobile: string };
+
+  @OneToMany((type) => Photo, (photo) => photo.user)
+  photos: Photo[];
 
   @Column({ default: 'male' })
   gender: string;
