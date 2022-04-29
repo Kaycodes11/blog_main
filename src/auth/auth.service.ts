@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ConflictException,
   HttpException,
   HttpStatus,
   Injectable,
@@ -8,7 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../users/entities/user.entity';
 import { LoginUserDto } from './dto/login-user.dto';
-import { compare } from 'bcrypt';
+import { compare, genSalt, hash } from 'bcrypt';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterUserDto } from './dto/register-user.dto';
@@ -35,17 +36,24 @@ export class AuthService {
     console.log('HELLO FROM THE AUTH SERVICE');
   }
 
-  async registerWithEmailAndPassword(
-    registerDto: RegisterUserDto,
-  ): Promise<void> {
+  async registerWithEmailAndPassword({
+    password,
+    ...rest
+  }: RegisterUserDto): Promise<void> {
     const isUser = await this.userRepository.findOne({
-      where: { email: registerDto.email },
+      where: { email: rest?.email },
     });
 
     if (isUser) {
-      throw new BadRequestException('Such user already exist');
+      throw new ConflictException('Duplicate signup');
     }
-    const user: User = await this.userRepository.create(registerDto);
+    const salt = await genSalt(10);
+    const passwordHash = await hash(password, salt);
+
+    const user: User = await this.userRepository.create({
+      password: passwordHash,
+      ...rest,
+    });
     await this.userRepository.save(user);
   }
 
@@ -73,10 +81,10 @@ export class AuthService {
       throw new HttpException('No user has found', HttpStatus.UNAUTHORIZED);
     }
 
-    // const isSamePass = await compare(password, user.password);
-    const isPlainPasswordSame = user.password === password;
-    // console.log(isPlainPasswordSame);
-    if (!isPlainPasswordSame) {
+    // const isPlainPasswordSame = user.password === password;
+    const isSamePass = await compare(password, user.password);
+    // console.log(isSamePass);
+    if (!isSamePass) {
       throw new HttpException('Wrong credentials', HttpStatus.UNAUTHORIZED);
     }
     return user;
