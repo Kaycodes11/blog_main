@@ -8,6 +8,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserHttpModule } from './user-http/user-http.module';
 import { CatsModule } from './cats/cats.module';
 import { ProfileModule } from './profile/profile.module';
+import { SharedModule } from './shared/shared.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { ProfileModule } from './profile/profile.module';
     UserHttpModule,
     CatsModule,
     ProfileModule,
+    SharedModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -21,4 +21,8 @@ export class CatsService {
   async uploadAvatar(file: any): Promise<void> {
     console.log('uploading avatar for cat');
   }
+
+  async findCats(): Promise<Cat[]> {
+    return await this.catRepository.find();
+  }
 }

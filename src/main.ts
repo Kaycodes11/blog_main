@@ -21,6 +21,7 @@ async function bootstrap() {
     .setDescription('This is Main Blog')
     .setVersion('1.0')
     .addTag('Blog')
+    .addBearerAuth()
     .build();
 
   // if used setGlobalPrefix('v1') then the URL becomes from localhost:3000/api to localhost:3000/v1/api
