@@ -9,16 +9,25 @@ import { Repository } from 'typeorm';
 import { User } from '../users/entities/user.entity';
 import { LoginUserDto } from './dto/login-user.dto';
 import { compare } from 'bcrypt';
+import { UsersService } from '../users/users.service';
+import { JwtService } from '@nestjs/jwt';
+import { RegisterUserDto } from './dto/register-user.dto';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
-  ) {}
+    private readonly userService: UsersService,
+    private readonly jwtService: JwtService,
+  ) {
+    // console.log('USER_AUTH', userService);
+  }
 
   async test(): Promise<void> {
     console.log('HELLO FROM THE AUTH SERVICE');
   }
+
+  // async register(registerDto: RegisterUserDto): Promise<void> {  }
 
   // this method will be used by localAuthGuard on the route needed to protect locally (against db email-pass)
   async validateAuth({ email, password }: LoginUserDto): Promise<User> {
