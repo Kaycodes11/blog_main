@@ -14,7 +14,7 @@ async function bootstrap() {
   // app.setGlobalPrefix('api');
   const configService = app.get<ConfigService>(ConfigService);
 
-  //swagger setup
+  //swagger setup done here
   const config = new DocumentBuilder()
     .setTitle('Main Blog')
     .setDescription('This is Main Blog')
