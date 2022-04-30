@@ -1,7 +1,9 @@
 import {Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable} from "typeorm";
 import { Category } from "./category.entity";
+import { Content } from "./content.entity";
 
 @Entity()
+// export class Question extends Content {}
 export class Question {
 
   @PrimaryGeneratedColumn()
@@ -11,7 +13,10 @@ export class Question {
   title: string;
 
   @Column()
-  text: string;
+  description: string;
+
+  @Column()
+  answersCount: number;
 
   /*
   * Question can have multiple Category(s)/ Category[] and single category can have multiple Question(s)

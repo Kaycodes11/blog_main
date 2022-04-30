@@ -9,12 +9,18 @@ export class Photo {
   @Column('varchar')
   url: string;
 
-  @Column('text')
-  name:string;
+  @Column()
+  title: string;
+
+  @Column({ length: 150 })
+  description: string;
+
+  @Column()
+  size:string;
 
   /*
-  * Basically, User can have multiple Photo[]/Photos but each Photo is owned by  only one Single User
-  * */
+   * Basically, User can have multiple Photo[]/Photos but each Photo is owned by  only one Single User
+   * */
 
   @ManyToOne((type) => User, (user) => user.photos)
   user: User;

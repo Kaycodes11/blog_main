@@ -1,11 +1,13 @@
 import {
+  BeforeInsert,
   Column,
   CreateDateColumn,
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+  UpdateDateColumn
+} from "typeorm";
+import { genSalt, hash } from "bcrypt";
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Photo } from 'src/photo/entities/photo.entity';
 
@@ -45,6 +47,12 @@ export class User {
 
   @Column({ default: 'male' })
   gender: string;
+
+  // @BeforeInsert()
+  // async hashPassword() {
+  //   const salt = await  genSalt(10);
+  //   this.password = await hash(this.password, salt);
+  // }
 
   @CreateDateColumn({ name: 'created_at', default: () => 'current_timestamp' })
   created_at: Date;

@@ -1,4 +1,4 @@
-import { Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn, RelationId } from "typeorm";
+import { Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn, RelationId } from "typeorm";
 import { Category } from "./category.entity";
 
 @Entity()
@@ -6,17 +6,26 @@ export class Post {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column()
+  title:string;
+
+  @Column()
+  description: string;
+
+  @Column()
+  viewCount: number;
+
   // @ManyToOne((type) => Category)
   // category: Category;
   //
   // @RelationId((post: Post) => post.category) // you need to specify target relation
   // categoryId: number;
 
-  @ManyToMany((type) => Category)
-  categories: Category[];
-
-  @RelationId((post: Post) => post.categories)
-  categoryIds: number[]
+  // @ManyToMany((type) => Category)
+  // categories: Category[];
+  //
+  // @RelationId((post: Post) => post.categories)
+  // categoryIds: number[]
 }
 
 
