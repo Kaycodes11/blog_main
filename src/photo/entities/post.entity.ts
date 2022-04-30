@@ -11,6 +11,7 @@ import {
 import { Category } from "./category.entity";
 import { JoinColumn } from "typeorm/browser";
 import { PostToCategory } from "./postToCategory.entity";
+import { Contains, IsFQDN, IsInt, Length, Max, Min } from "class-validator";
 
 @Entity()
 export class Post {
@@ -18,7 +19,22 @@ export class Post {
   id: string;
 
   @Column()
-  name:string;
+  // @Length(10, 20)
+  title: string;
+
+  @Column()
+  // @Contains("Hello")
+  text: string;
+
+  @Column()
+  // @IsFQDN()
+  site: string;
+
+  @Column()
+  // @IsInt()
+  // @Min(0)
+  // @Max(10)
+  rating: number;
 
   @Column()
   description: string;
@@ -120,3 +136,24 @@ export class Post {
 //   })
 //   categories: Category[];
 // }
+
+/*
+* #### validation by entity without dto
+* import {getManager} from "typeorm";
+import {validate} from "class-validator";
+
+let post = new Post();
+post.title = "Hello"; // should not pass
+post.text = "this is a great post about hell world"; // should not pass
+post.rating = 11; // should not pass
+post.email = "google.com"; // should not pass
+post.site = "googlecom"; // should not pass
+
+const errors = await validate(post);
+if (errors.length > 0) {
+    throw new Error(`Validation failed!`);
+} else {
+    await getManager().save(post);
+}
+*
+* */

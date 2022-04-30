@@ -20,12 +20,14 @@ export class User {
   id: string;
 
   @Column('varchar', { length: 100, nullable: true })
+  // @Length(10, 100)
   firstName: string;
 
   @Column('varchar', { length: 100, nullable: true })
   surName: string;
 
   @Column('varchar')
+  // @IsEmail()
   email: string;
 
   @Column('text')
