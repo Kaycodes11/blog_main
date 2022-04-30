@@ -1,15 +1,19 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
+  Param,
   Post,
   Query,
-  Res, StreamableFile,
+  Res,
+  StreamableFile,
   UploadedFile,
-  UseInterceptors
-} from "@nestjs/common";
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { Response } from 'express';
 import { UsersService } from './users.service';
 import { CatsService } from '../cats/cats.service';
@@ -19,6 +23,9 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
 import { join } from 'path';
 import { createReadStream } from 'fs';
+import { RolesGuard } from '../shared/guards/roles.guard';
+import { UserRoles } from '../shared/entities/role.entity';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @ApiTags('users')
 @Controller('users')
@@ -85,5 +92,13 @@ export class UsersController {
   //     'Content-Disposition': 'attachment; filename="package.json"'
   //   })
   //   return new StreamableFile(file);
+  // }
+
+  // @Delete("id")
+  // @UseGuards(RolesGuard(UserRole.ADMIN)) [role based]
+  // @UseGuards(PermissionGuard(PostsPermission.DeletePost)) [permission based]
+  // @UseGuards(JwtAuthGuard)
+  // async deleteById(@Param('id') userId: string, @Res() response: Response): Promise<void> {
+  // console.log('user deleted by id')
   // }
 }

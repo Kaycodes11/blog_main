@@ -41,3 +41,6 @@ useClass: RolesGuard [after all this is a class]
 #### [TypeORM READ](https://www.example.com/my%20great%20page)
 
 [FILE UPLOAD](https://gabrieltanner.org/blog/nestjs-file-uploading-using-multer)
+
+# Authentication
+Role Based Claim Based Permission Based Token Based

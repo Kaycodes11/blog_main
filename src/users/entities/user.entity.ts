@@ -16,6 +16,21 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Photo } from 'src/photo/entities/photo.entity';
 import { Profile } from '../../profile/entities/profile.entity';
 
+enum CategoriesPermission {
+  CreateCategory = 'CreateCategory',
+}
+
+enum PostsPermission {
+  DeletePost = 'DeletePost',
+}
+
+const Permission = {
+  ...PostsPermission,
+  ...CategoriesPermission,
+};
+
+export  type TPermission = PostsPermission | CategoriesPermission;
+
 // @Entity({
 //   name: "users",
 //   engine: "MyISAM",
@@ -90,6 +105,9 @@ export class User {
 
   @Column({ default: false })
   isActive: false;
+
+  @Column({type: "enum", enum: Permission, array: true, default: []})
+  permissions: TPermission[];
 
   // @BeforeInsert()
   // async hashPassword() {
