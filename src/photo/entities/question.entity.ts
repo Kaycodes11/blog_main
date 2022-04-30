@@ -33,6 +33,12 @@ export class Question {
   })
   @JoinTable()
   categories: Category[];
+
+  // @ManyToMany(() => Category, (category) => category.questions, {
+  //   cascade: true,
+  // })
+  // @JoinTable()
+  // categories: Promise<Category[]>;
 }
 
 /*
@@ -110,4 +116,24 @@ const categoriesWithQuestions = await connection
     .createQueryBuilder("category")
     .leftJoinAndSelect("category.questions", "question")
     .getMany();
-* */
+    *
+    *
+#### Example how to save a lazy loaded entity basically when joined table has Promise<>
+* const category1 = new Category();
+category1.name = "animals";
+await connection.manager.save(category1);
+
+const category2 = new Category();
+category2.name = "zoo";
+await connection.manager.save(category2);
+
+const question = new Question();
+question.categories = Promise.resolve([category1, category2]);
+await connection.manager.save(question);
+*
+*
+*#### Example how to load objects inside lazy relations:
+
+const question = await connection.getRepository(Question).findOne(1);
+const categories = await question.categories; // you'll have all question's categories inside "categories" variable now
+ */

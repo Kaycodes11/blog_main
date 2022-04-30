@@ -2,15 +2,17 @@ import {
   BeforeInsert,
   Column,
   CreateDateColumn,
-  Entity, JoinColumn,
-  OneToMany, OneToOne,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn
-} from "typeorm";
-import { genSalt, hash } from "bcrypt";
+  UpdateDateColumn,
+} from 'typeorm';
+import { genSalt, hash } from 'bcrypt';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Photo } from 'src/photo/entities/photo.entity';
-import { Profile } from "../../profile/entities/profile.entity";
+import { Profile } from '../../profile/entities/profile.entity';
 
 @Entity('users')
 export class User {
@@ -39,17 +41,22 @@ export class User {
   // info: { firstName: string, lastName: string, fullName: string, mobile: string };
 
   /*
-  * Here A/User has multiple instance of B/Photos thus oneToMany relation
-  * Basically, One User's instance can have multiple Photo's instances
-  * JoinColumn can be omitted with OneToMany/ManyToOne relation
-  * OneToMany/ManyToOne relation, foreign key placed on @ManyToOne i.e. Photo entity
-  * */
+   * Here A/User has multiple instance of B/Photos thus oneToMany relation
+   * Basically, One User's instance can have multiple Photo's instances
+   * JoinColumn can be omitted with OneToMany/ManyToOne relation
+   * OneToMany/ManyToOne relation, foreign key placed on @ManyToOne i.e. Photo entity
+   * */
 
   @OneToMany((type) => Photo, (photo) => photo.user)
   photos: Photo[];
 
+  // when getting User not including Profile but still need like profileId
+  // then just make same named property that's same as the column created by relation like here Profile + id = "profileId"
+  @Column({ nullable: true })
+  profileId: string;
+
   // as known this will generate Profile + id = profileId foreign key and since JoinColumn mentioned that means
-  @OneToOne(() => Profile, profile => profile.user)
+  @OneToOne(() => Profile, (profile) => profile.user)
   @JoinColumn()
   profile: Profile;
 
@@ -97,5 +104,20 @@ const users = await userRepository.find({ relations: ["profile"] });
     .getRepository(User)
     .createQueryBuilder("user")
     .leftJoinAndSelect("user.profile", "profile")
+    .getMany();
+    *
+#### How to load relations in entities
+The easiest way to load your entity relations is to use relations option in FindOptions:
+
+const users = await connection.getRepository(User).find({ relations: ["profile", "photos", "videos"] });
+
+* ## Alternative and more flexible way is to use QueryBuilder:
+
+const user = await connection
+    .getRepository(User)
+    .createQueryBuilder("user")
+    .leftJoinAndSelect("user.profile", "profile")
+    .leftJoinAndSelect("user.photos", "photo")
+    .leftJoinAndSelect("user.videos", "video")
     .getMany();
 *  */

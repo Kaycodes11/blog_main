@@ -19,6 +19,9 @@ export class PostToCategory {
   @ManyToOne(() => Post, post => post.postToCategories)
   public post!: Post;
 
+  // @ManyToOne(() => Post, post => post.postToCategories, { createForeignKeyConstraints: false/true by default })
+  // public post!: Post;
+
   @ManyToOne(() => Category, category => category.postToCategories)
   public category!: Category;
 }

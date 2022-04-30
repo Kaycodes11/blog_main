@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { getManager, Repository } from "typeorm";
 import { RegisterUserDto } from '../auth/dto/register-user.dto';
 import { User } from './entities/user.entity';
 
@@ -15,7 +15,7 @@ export class UsersService {
 
 
 
-  // async updateUser() {}
+  // ~
   // async deleteUsers() {}
   // async deleteUserById(id:string) {}
 }

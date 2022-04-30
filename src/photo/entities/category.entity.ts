@@ -18,11 +18,23 @@ export class Category {
   // @Column()
   // description: string;
 
+  // eager loading: will  include joined entities by default  when using find methods
   @ManyToMany(type => Question, question => question.categories)
   questions: Question[];
 
+  // lazy loading: will not include joined entities unless mentioned when using find methods
+  // @ManyToMany(type => Question, question => question.categories)
+  // questions: Promise<Question[]>;
+
   @OneToMany(() => PostToCategory, postToCategory => postToCategory.category)
   public postToCategories!: PostCategory[];
+
+
+  // @ManyToOne(type => Category, category => category.childCategories)
+  // parentCategory: Category;
+  //
+  // @OneToMany(type => Category, category => category.parentCategory)
+  // childCategories: Category[];
 
 
   /*
