@@ -24,7 +24,7 @@ export class MailService {
       },
     });
   }
-  async resetPasword(user: User, token: string) {
+  async resetPassword(user: User, token: string) {
     const url = `example.com/auth/confirm?token=${token}`;
     await this.mailerService.sendMail({
       to: user.email,
