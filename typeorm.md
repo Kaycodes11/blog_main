@@ -10,7 +10,29 @@ By default, eager loading will include the joined
 table when using find but disable if using queryBuilder
 
 otherwise, use lazy loading to load what needed
-with find methods by using Promise, e.g. Category Entity 
+with find methods by using Promise, e.g. Category Entity
+
+
+## These are applied on global (main.ts), controller, method, param
+
+## To apply on module level, use built-in APP_GUARD, APP_INTERCEPTORS, APP_PIPE, APP_FILTER etc.
+providers: [{
+provide: APP_GUARD,
+useClass: RolesGuard [after all this is a class]
+}]
+
+#### Guards
+
+#### Interceptors
+
+#### Middlewares
+
+#### Custom Decorators
+
+#### Exception Filters : Error Handler
+
+#### Dynamic Modules
+
 
 
 
