@@ -25,6 +25,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { EntityManager, Transaction, TransactionManager } from "typeorm";
 
 @ApiTags('auth')
 // @ApiHeader({
@@ -56,8 +57,10 @@ export class AuthController {
     console.log('The bulk user registration');
   }
 
+  @Transaction()
   @Post('register')
   async registerWithEmailAndPassword(
+    @TransactionManager() manager: EntityManager,
     @Body() registerDto: RegisterUserDto,
     @Res() response: Response,
   ): Promise<void> {

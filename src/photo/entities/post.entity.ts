@@ -1,4 +1,5 @@
 import {
+  AfterInsert, BeforeUpdate,
   Column,
   Entity,
   JoinTable,
@@ -44,6 +45,16 @@ export class Post {
 
   @OneToMany(() => PostToCategory, postToCategory => postToCategory.post)
   public postToCategories!: PostToCategory[];
+
+  // @AfterInsert()
+  // resetRating() {
+  //   this.rating = 0
+  // }
+
+  // @BeforeUpdate()
+  // updateDates() {
+  //   this.updated_at = new Date()
+  // }
 
   // @ManyToOne(type => Category)
   // @JoinColumn() // this decorator is optional for @ManyToOne, but required for @OneToOne

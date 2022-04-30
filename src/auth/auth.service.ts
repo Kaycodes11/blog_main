@@ -6,7 +6,14 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import {
+  Connection,
+  EntityManager,
+  getCustomRepository,
+  Repository,
+  Transaction,
+  TransactionRepository,
+} from 'typeorm';
 import { User } from '../users/entities/user.entity';
 import { LoginUserDto } from './dto/login-user.dto';
 import { compare, genSalt, hash } from 'bcrypt';
@@ -15,6 +22,7 @@ import { JwtService } from '@nestjs/jwt';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { MailService } from '../mail/mail.service';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { UserRepository } from './repositories/auth.repository';
 
 type LoginToken = {
   accessToken: string;
@@ -28,6 +36,8 @@ type LoginToken = {
 export class AuthService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
+    private readonly entityManager: EntityManager,
+    private readonly connection: Connection,
     private readonly userService: UsersService,
     private readonly jwtService: JwtService,
     private readonly mailService: MailService,
@@ -39,10 +49,19 @@ export class AuthService {
     console.log('HELLO FROM THE AUTH SERVICE');
   }
 
-  async registerWithEmailAndPassword({
-    password,
-    ...rest
-  }: RegisterUserDto): Promise<void> {
+  @Transaction()
+  async registerWithEmailAndPassword(
+    { password, ...rest }: RegisterUserDto,
+    @TransactionRepository() userRepository1?: Repository<User>,
+  ): Promise<void> {
+    const user1 = userRepository1.findOne({ email: rest?.email });
+    // const customUserRepository =  this.entityManager.getCustomRepository(UserRepository);
+    const customUserRepository1 = getCustomRepository(UserRepository);
+    // console.log(`user1`, user1, 'customRepo: ', customUserRepository1.findJustByName("John", "Johnson"));
+
+    // to get the custom Repository either connection.getCustomRepository(UseRepository)
+    // To get entity as repository/alternative to constructor injectRepository connection.getRepository(User)
+
     const isUser = await this.userRepository.findOne({
       where: { email: rest?.email },
     });

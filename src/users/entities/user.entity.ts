@@ -1,18 +1,39 @@
 import {
   BeforeInsert,
   Column,
-  CreateDateColumn,
-  Entity,
+  CreateDateColumn, DeleteDateColumn,
+  Entity, Index,
   JoinColumn,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+  UpdateDateColumn
+} from "typeorm";
 import { genSalt, hash } from 'bcrypt';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Photo } from 'src/photo/entities/photo.entity';
 import { Profile } from '../../profile/entities/profile.entity';
+
+// @Entity({
+//   name: "users",
+//   engine: "MyISAM",
+//   database: 'example_dev',
+//   schema: 'schema_with_best_tables',
+//   synchronize: false,
+//   orderBy: {
+//     name: "ASC",
+//     id: "DESC"
+//   }
+// })
+// @Index(["firstName", "lastName"])
+// @Index(["lastName", "middleName"])
+// @Index(["firstName", "lastName", "middleName"], { unique: true })
+
+// @Unique(["firstName"])
+// @Unique(["lastName", "middleName"])
+// @Unique("UQ_NAMES", ["firstName", "lastName", "middleName"])
+// @Check(`"firstName" <> 'John' AND "surName" <> 'Johnson'`)
+// @Check(`"age" > 16`)
 
 @Entity('users')
 export class User {
@@ -20,12 +41,13 @@ export class User {
   id: string;
 
   @Column('varchar', { length: 100, nullable: true })
-  // @Length(10, 100)
+  // @Column('varchar', { length: 100, nullable: true, unique:true })
   firstName: string;
 
   @Column('varchar', { length: 100, nullable: true })
   surName: string;
 
+  @Index({unique: true})
   @Column('varchar')
   // @IsEmail()
   email: string;
@@ -65,6 +87,9 @@ export class User {
   @Column({ default: 'male' })
   gender: string;
 
+  @Column({default: false})
+  isActive: false;
+
   // @BeforeInsert()
   // async hashPassword() {
   //   const salt = await  genSalt(10);
@@ -76,6 +101,9 @@ export class User {
 
   @UpdateDateColumn({ name: 'updated_at', default: () => 'current_timestamp' })
   updated_at: Date;
+
+  @DeleteDateColumn()
+  deletedDate: Date;
 }
 
 // this will all the props and their metadata decorators
@@ -123,3 +151,18 @@ const user = await connection
     .leftJoinAndSelect("user.videos", "video")
     .getMany();
 *  */
+
+
+// @Entity()
+// @Exclusion(`USING gist ("room" WITH =, tsrange("from", "to") WITH &&)`)
+// export class RoomBooking {
+//
+//   @Column()
+//   room: string;
+//
+//   @Column()
+//   from: Date;
+//
+//   @Column()
+//   to: Date;
+// }
