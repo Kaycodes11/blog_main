@@ -9,8 +9,8 @@ import {
   Req,
   Res,
   UploadedFile,
-  UseInterceptors,
-} from '@nestjs/common';
+  UseInterceptors
+} from "@nestjs/common";
 import {
   ApiBearerAuth,
   ApiBody,
@@ -22,14 +22,15 @@ import {
   ApiTags,
   getSchemaPath
 } from "@nestjs/swagger";
-import { Cat } from './entities/cat.entity';
-import { CatDto } from './dto/cat.dto';
-import { CatsService } from './cats.service';
-import { Request, Response, response } from 'express';
-import { FileUploadDto } from './dto/file-upload.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { PaginatedDto } from './dto/paginated-dto';
-import { ApiPaginatedResponse } from '../shared/decorators/ApiPaginatedResponse';
+import { Cat } from "./entities/cat.entity";
+import { CatDto } from "./dto/cat.dto";
+import { CatsService } from "./cats.service";
+import { Request, Response } from "express";
+import { FileUploadDto } from "./dto/file-upload.dto";
+import { FileInterceptor } from "@nestjs/platform-express";
+import { PaginatedDto } from "./dto/paginated-dto";
+import { Roles } from "../shared/decorators/roles.decorator";
+import { UserRoles } from "../shared/entities/role.entity";
 
 @ApiTags('cats')
 @ApiExtraModels(PaginatedDto)
@@ -75,6 +76,7 @@ export class CatsController {
 
   @HttpCode(HttpStatus.CREATED)
   @Post('new')
+  @Roles(UserRoles.GUEST)
   @ApiCreatedResponse({ type: Cat, description: 'new cat has registered' })
   @ApiForbiddenResponse({ description: 'error here' })
   async create(@Body() createCatDto: CatDto): Promise<void | Cat> {
@@ -104,4 +106,6 @@ export class CatsController {
       response.status(500).json({ message: error.message });
     }
   }
+
+
 }

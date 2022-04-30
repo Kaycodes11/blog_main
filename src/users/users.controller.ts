@@ -6,10 +6,10 @@ import {
   HttpStatus,
   Post,
   Query,
-  Res,
+  Res, StreamableFile,
   UploadedFile,
-  UseInterceptors,
-} from '@nestjs/common';
+  UseInterceptors
+} from "@nestjs/common";
 import { Response } from 'express';
 import { UsersService } from './users.service';
 import { CatsService } from '../cats/cats.service';
@@ -17,6 +17,8 @@ import { ApiBody, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { UserRole } from './user.enum';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
+import { join } from 'path';
+import { createReadStream } from 'fs';
 
 @ApiTags('users')
 @Controller('users')
@@ -73,4 +75,15 @@ export class UsersController {
     };
     response.json({ message: 'image uploaded', data });
   }
+
+  // nest js stream example
+  // @Get()
+  //  testStream(@Res() response: Response): StreamableFile {
+  //   const file = createReadStream(join(process.cwd(), 'package.json'));
+  //   response.set({
+  //     'Content-Type': 'application/json',
+  //     'Content-Disposition': 'attachment; filename="package.json"'
+  //   })
+  //   return new StreamableFile(file);
+  // }
 }
