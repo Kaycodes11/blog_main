@@ -36,3 +36,7 @@ lerna-debug.log*
 
 # Environment
 .env
+
+# MISC
+blog.http
+*.http
