@@ -27,6 +27,7 @@ import { PhotoModule } from './photo/photo.module';
         username: configService.get('POSTGRES_USER'),
         password: configService.get('POSTGRES_PASSWORD'),
         database: configService.get('POSTGRES_DATABASE'),
+        logging: ['query', 'error'],
         autoLoadEntities: true,
         synchronize: true,
       }),
