@@ -1,3 +1,4 @@
+
 Typeorm cascade true then no need save() individually
 
 foreign key's value are nullable by default
@@ -38,3 +39,5 @@ useClass: RolesGuard [after all this is a class]
 #### SELECT : INSERT : UPDATE : DELETE WITH QUERY BUILDER
 
 #### [TypeORM READ](https://www.example.com/my%20great%20page)
+
+[FILE UPLOAD](https://gabrieltanner.org/blog/nestjs-file-uploading-using-multer)

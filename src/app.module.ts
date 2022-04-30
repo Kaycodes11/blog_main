@@ -11,12 +11,14 @@ import { ProfileModule } from './profile/profile.module';
 import { SharedModule } from './shared/shared.module';
 import { MailModule } from './mail/mail.module';
 import { PhotoModule } from './photo/photo.module';
+import { MulterModule } from "@nestjs/platform-express";
 
 @Module({
   imports: [
     AuthModule,
     UsersModule,
     ConfigModule.forRoot({ isGlobal: true }),
+    MulterModule.register({ dest: "./files" }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigService],
       inject: [ConfigService],

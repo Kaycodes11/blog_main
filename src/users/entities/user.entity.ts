@@ -1,14 +1,16 @@
 import {
   BeforeInsert,
   Column,
-  CreateDateColumn, DeleteDateColumn,
-  Entity, Index,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  Index,
   JoinColumn,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn
-} from "typeorm";
+  UpdateDateColumn,
+} from 'typeorm';
 import { genSalt, hash } from 'bcrypt';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Photo } from 'src/photo/entities/photo.entity';
@@ -47,9 +49,8 @@ export class User {
   @Column('varchar', { length: 100, nullable: true })
   surName: string;
 
-  @Index({unique: true})
+  @Index({ unique: true })
   @Column('varchar')
-  // @IsEmail()
   email: string;
 
   @Column('text')
@@ -87,7 +88,7 @@ export class User {
   @Column({ default: 'male' })
   gender: string;
 
-  @Column({default: false})
+  @Column({ default: false })
   isActive: false;
 
   // @BeforeInsert()
@@ -151,7 +152,6 @@ const user = await connection
     .leftJoinAndSelect("user.videos", "video")
     .getMany();
 *  */
-
 
 // @Entity()
 // @Exclusion(`USING gist ("room" WITH =, tsrange("from", "to") WITH &&)`)
