@@ -1,9 +1,11 @@
 import {
   Entity,
   PrimaryGeneratedColumn,
-  Column, ManyToMany
+  Column, ManyToMany, OneToMany
 } from "typeorm";
 import { Question } from './question.entity';
+import { PostToCategory } from "./postToCategory.entity";
+import { PostCategory } from "./postview.entity";
 
 @Entity()
 export class Category {
@@ -13,11 +15,14 @@ export class Category {
   @Column()
   name: string;
 
-  @Column()
-  description: string;
+  // @Column()
+  // description: string;
 
   @ManyToMany(type => Question, question => question.categories)
   questions: Question[];
+
+  @OneToMany(() => PostToCategory, postToCategory => postToCategory.category)
+  public postToCategories!: PostCategory[];
 
 
   /*

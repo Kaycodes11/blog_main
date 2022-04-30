@@ -40,15 +40,16 @@ export class User {
 
   /*
   * Here A/User has multiple instance of B/Photos thus oneToMany relation
-  * Basically, User can have multiple Photo[] but each Photo is owned by  only one Single User
+  * Basically, One User's instance can have multiple Photo's instances
+  * JoinColumn can be omitted with OneToMany/ManyToOne relation
+  * OneToMany/ManyToOne relation, foreign key placed on @ManyToOne i.e. Photo entity
   * */
 
   @OneToMany((type) => Photo, (photo) => photo.user)
   photos: Photo[];
 
   // as known this will generate Profile + id = profileId foreign key and since JoinColumn mentioned that means
-  // foreign key placed on this entity on this one-to-one relationship
-  @OneToOne(() => Profile)
+  @OneToOne(() => Profile, profile => profile.user)
   @JoinColumn()
   profile: Profile;
 

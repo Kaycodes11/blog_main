@@ -14,3 +14,13 @@ export class Profile {
   user: User;
 
 }
+
+/*
+# Bi-directional relations allow you to join relations from both sides using QueryBuilder:
+
+const profiles = await connection
+    .getRepository(Profile)
+    .createQueryBuilder("profile")
+    .leftJoinAndSelect("profile.user", "user")
+    .getMany();
+* */

@@ -1,6 +1,16 @@
-import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, RelationId } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  RelationId
+} from "typeorm";
 import { Category } from "./category.entity";
 import { JoinColumn } from "typeorm/browser";
+import { PostToCategory } from "./postToCategory.entity";
 
 @Entity()
 export class Post {
@@ -15,6 +25,9 @@ export class Post {
 
   @Column()
   viewCount: number;
+
+  @OneToMany(() => PostToCategory, postToCategory => postToCategory.post)
+  public postToCategories!: PostToCategory[];
 
   // @ManyToOne(type => Category)
   // @JoinColumn() // this decorator is optional for @ManyToOne, but required for @OneToOne
@@ -37,19 +50,19 @@ export class Post {
   // ])
   // category: Category;
 
-  @ManyToMany(type => Category)
-  @JoinTable({
-    name: "question_categories", // table name for the junction table of this relation
-    joinColumn: {
-      name: "question",
-      referencedColumnName: "id"
-    },
-    inverseJoinColumn: {
-      name: "category",
-      referencedColumnName: "id"
-    }
-  })
-  categories: Category[];
+  // @ManyToMany(type => Category)
+  // @JoinTable({
+  //   name: "question_categories", // table name for the junction table of this relation
+  //   joinColumn: {
+  //     name: "question",
+  //     referencedColumnName: "id"
+  //   },
+  //   inverseJoinColumn: {
+  //     name: "category",
+  //     referencedColumnName: "id"
+  //   }
+  // })
+  // categories: Category[];
 
   // @ManyToOne((type) => Category)
   // @JoinColumn({name: "categoryId"})
@@ -106,5 +119,4 @@ export class Post {
 //     }
 //   })
 //   categories: Category[];
-//
 // }
