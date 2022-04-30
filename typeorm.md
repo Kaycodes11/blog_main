@@ -32,3 +32,9 @@ useClass: RolesGuard [after all this is a class]
 #### Exception Filters : Error Handler
 
 #### Dynamic Modules
+
+#### Transaction : Migrations : Query Runner : Caching
+
+#### SELECT : INSERT : UPDATE : DELETE WITH QUERY BUILDER
+
+#### [TypeORM READ](https://www.example.com/my%20great%20page)

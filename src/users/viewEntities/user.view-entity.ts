@@ -11,4 +11,4 @@
 //     .where("category.name = 'Cars'")
 // })
 
-// now import this within entities array on app.module or register within forFeature on user
+// now import this within entities array on app.module or register within forFeature on its own module to use it
